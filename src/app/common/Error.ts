@@ -1,5 +1,5 @@
 export default interface Error {
-    message: String;
-    domain: String;
-    reason: String;
+  message: string;
+  domain: string;
+  reason: string;
 }

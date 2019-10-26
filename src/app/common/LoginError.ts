@@ -1,6 +1,5 @@
-export default interface LoginError 
-{
-    code: Number;
-    message: String;
-    errors: Error[];
+export default interface LoginError {
+  code: number;
+  message: string;
+  errors: Error[];
 }

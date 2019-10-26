@@ -5,25 +5,24 @@
 </ion-header>
 
 <ion-content>
+  <ion-slides pager="true" [options]="slideOpts">
+    <ion-slide>
+      <ion-card style="width: 100vw;">
+        <ion-card-header>
+          <ion-card-subtitle>Account Number</ion-card-subtitle>
+          <ion-card-title>123123123123</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <h4>Name: Rob Baker</h4>
+          <h4>Age: 42</h4>
+        </ion-card-content>
+      </ion-card>
+    </ion-slide>
+  </ion-slides>
 
-    <ion-slides pager="true" [options]="slideOpts">
-        <ion-slide>
-
-          <ion-card style="width: 100vw;">
-            <ion-card-header>
-              <ion-card-subtitle>Account Number</ion-card-subtitle>
-              <ion-card-title>123123123123</ion-card-title>
-            </ion-card-header>
-            <ion-card-content>
-              <h4>Name: Rob Baker</h4> 
-              <h4>Age: 42</h4>
-            </ion-card-content>
-          </ion-card>
-
-        </ion-slide>
-      </ion-slides>
-
-      <ion-button expand="block">New Account</ion-button>
-      <ion-button (click)="app.logoutUser()" expand="block">Logout</ion-button>
-  
+  <ion-button expand="block">New Account</ion-button>
+  <ion-button (click)="app.logoutUser()" expand="block">Logout</ion-button>
+  <ion-fab>
+    <ion-fab-button>Button</ion-fab-button>
+  </ion-fab>
 </ion-content>

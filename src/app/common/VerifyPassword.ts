@@ -1,10 +1,10 @@
 export default interface VerifyPassword {
-    kind: String;
-    localId: String;
-    email: String;
-    displayName: String;
-    idToken: String;
-    registered: boolean;
-    refreshToken: String;
-    expiresIn: String;
+  kind: string;
+  localId: string;
+  email: string;
+  displayName: string;
+  idToken: string;
+  registered: boolean;
+  refreshToken: string;
+  expiresIn: string;
 }

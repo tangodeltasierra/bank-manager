@@ -1,4 +1,3 @@
-export default class Account
-{
-    accountNumber: Number;
+export default class Account {
+  accountNumber: number;
 }
