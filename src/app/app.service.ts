@@ -12,6 +12,7 @@ import {
 } from '@angular/router';
 import { of, from, Observable } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+import { LoadingController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
@@ -24,10 +25,16 @@ export class AppService implements CanActivate {
   constructor(
     private http: HttpClient,
     private storage: Storage,
-    private router: Router
+    private router: Router,
+    private loadingController: LoadingController
   ) {}
 
-  public login(email: string, password: string) {
+  public async login(email: string, password: string) {
+    const loading = await this.loadingController.create({
+      message: 'Please Wait...'
+    });
+    await loading.present();
+
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
@@ -38,15 +45,16 @@ export class AppService implements CanActivate {
       .post(
         this.onboard,
         JSON.stringify({
-          email: { email },
-          password: { password },
+          ...{ email },
+          ...{ password },
           returnSecureToken: true
         }),
         httpOptions
       )
       .subscribe(
         (data: VerifyPassword) => this._handleLogin(data),
-        (error: { error: LoginError }) => this._handleLoginError(error.error)
+        (error: { error: LoginError }) => this._handleLoginError(error.error),
+        async () => await loading.dismiss()
       );
   }
 

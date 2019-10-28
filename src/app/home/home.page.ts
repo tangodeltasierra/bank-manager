@@ -5,7 +5,7 @@ import { AppService } from '../app.service';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'],
+  styleUrls: ['home.page.scss']
 })
 export class HomePage {
   loginForm: FormGroup;
@@ -17,10 +17,9 @@ export class HomePage {
     });
   }
 
-  public userLogin(){
+  public userLogin() {
     const email = this.loginForm.value.email;
     const password = this.loginForm.value.password;
     this.app.login(email, password);
   }
-
 }

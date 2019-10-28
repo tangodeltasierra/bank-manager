@@ -1,23 +1,19 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Ionic Blank
+      Manage Your Bank
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <div class="ion-padding">
-    The world is your oyster.
     <p>
-      If you get lost, the
-      <a target="_blank" rel="noopener" href="https://ionicframework.com/docs/"
-        >docs</a
-      >
-      will be your guide.
+      <b>Hello There<ion-icon name="happy"></ion-icon></b>
     </p>
+    <p><b>Please enter your Online Banking Email and Password to login.</b></p>
   </div>
-  <form [formGroup]="loginForm" (ngSubmit)="userLogin()">
+  <form class="ion-padding" [formGroup]="loginForm" (ngSubmit)="userLogin()">
     <ion-input formControlName="email" placeholder="Email"></ion-input>
     <ion-input
       formControlName="password"

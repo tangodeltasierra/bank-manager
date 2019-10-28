@@ -7,11 +7,13 @@ import { IonicStorageModule } from '@ionic/storage';
 import { IonicModule } from '@ionic/angular';
 
 import { DashboardPage } from './dashboard.page';
+import { DashboardResolver } from './dashboard.resolver';
 
 const routes: Routes = [
   {
     path: '',
-    component: DashboardPage
+    component: DashboardPage,
+    resolve: { data: DashboardResolver }
   }
 ];
 
@@ -23,6 +25,7 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [DashboardPage]
+  declarations: [DashboardPage],
+  providers: [DashboardResolver]
 })
 export class DashboardPageModule {}

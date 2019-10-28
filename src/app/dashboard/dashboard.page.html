@@ -1,28 +1,46 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
     <ion-title>Manage Accounts</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-slides pager="true" [options]="slideOpts">
-    <ion-slide>
-      <ion-card style="width: 100vw;">
-        <ion-card-header>
-          <ion-card-subtitle>Account Number</ion-card-subtitle>
-          <ion-card-title>123123123123</ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-          <h4>Name: Rob Baker</h4>
-          <h4>Age: 42</h4>
-        </ion-card-content>
-      </ion-card>
-    </ion-slide>
-  </ion-slides>
+<ion-menu side="start" menuId="first" contentId="main">
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-title>Menu</ion-title>
+      <ion-title size="small">Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item><ion-icon name="home"></ion-icon> Home</ion-item>
+      <ion-item><ion-icon name="wallet"></ion-icon> Withdraw Cash</ion-item>
+      <ion-item><ion-icon name="cash"></ion-icon> Deposit Cash</ion-item>
+      <ion-item><ion-icon name="card"></ion-icon> Open New Account</ion-item>
+      <ion-item (click)="app.logoutUser()"
+        ><ion-icon name="exit"></ion-icon> Logout</ion-item
+      >
+    </ion-list>
+  </ion-content>
+</ion-menu>
+<ion-router-outlet id="main"></ion-router-outlet>
 
-  <ion-button expand="block">New Account</ion-button>
-  <ion-button (click)="app.logoutUser()" expand="block">Logout</ion-button>
-  <ion-fab>
-    <ion-fab-button>Button</ion-fab-button>
-  </ion-fab>
+<ion-content>
+  <p class="ion-padding" *ngIf="accountDetails !== null">
+    <b>Welcome, {{ accountDetails.name }}</b>
+  </p>
+  <ion-virtual-scroll
+    *ngIf="accountDetails !== null"
+    [items]="accountDetails.accounts"
+  >
+    <ion-item *virtualItem="let account">
+      {{ account }}
+    </ion-item>
+  </ion-virtual-scroll>
+  <ion-button expand="block"
+    ><ion-icon name="card"></ion-icon> Open New Account</ion-button
+  >
 </ion-content>
