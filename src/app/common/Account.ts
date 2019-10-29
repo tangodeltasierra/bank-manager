@@ -1,3 +1,5 @@
-export default class Account {
+export default interface Account {
   accountNumber: number;
+  balance: number;
+  overdraft: number;
 }

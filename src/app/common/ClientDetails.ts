@@ -1,5 +1,5 @@
 export default interface ClientDetails {
-  accounts: Account[];
+  accounts: number[];
   name: string;
   age: number;
 }

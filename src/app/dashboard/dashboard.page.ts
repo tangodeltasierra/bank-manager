@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { AppService } from '../app.service';
-import { HttpClient } from '@angular/common/http';
-import { MenuController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 import ClientDetails from '../common/ClientDetails';
+import { AuthService } from '../services/auth.service';
+import { ModalController } from '@ionic/angular';
+import { DashboardComponent } from './dashboard.component';
+import { AccountService } from '../services/account.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,35 +12,43 @@ import ClientDetails from '../common/ClientDetails';
   styleUrls: ['./dashboard.page.scss']
 })
 export class DashboardPage implements OnInit {
-  slideOpts = {
-    initialSlide: 1,
-    speed: 400
-  };
-  accountDetails: ClientDetails = null;
+  accountDetails: ClientDetails;
 
   constructor(
     private router: ActivatedRoute,
-    private app: AppService,
-    private menu: MenuController
-  ) {}
-
-  openFirst() {
-    this.menu.enable(true, 'first');
-    this.menu.open('first');
-  }
-
-  openEnd() {
-    this.menu.open('end');
-  }
-
-  openCustom() {
-    this.menu.enable(true, 'custom');
-    this.menu.open('custom');
+    private auth: AuthService,
+    private acc: AccountService,
+    private modalController: ModalController
+  ) {
+    this.accountDetails = null;
   }
 
   ngOnInit() {
     this.router.snapshot.data.data.subscribe(
       (data: ClientDetails) => (this.accountDetails = data)
     );
+  }
+
+  async viewAccount(data?: any) {
+    const modal = await this.modalController.create({
+      component: DashboardComponent,
+      componentProps: {
+        dismiss: () => modal.dismiss(),
+        data: this.acc.getAccount(data)
+      }
+    });
+    return await modal.present();
+  }
+
+  async createAccount() {
+    const modal = await this.modalController.create({
+      component: DashboardComponent,
+      componentProps: {
+        message: '',
+        dismiss: () => modal.dismiss(),
+        data: this.acc.createAccount()
+      }
+    });
+    return await modal.present();
   }
 }

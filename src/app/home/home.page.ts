@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
-import { AppService } from '../app.service';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -10,7 +10,7 @@ import { AppService } from '../app.service';
 export class HomePage {
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private app: AppService) {
+  constructor(private fb: FormBuilder, private auth: AuthService) {
     this.loginForm = this.fb.group({
       email: [],
       password: []
@@ -20,6 +20,6 @@ export class HomePage {
   public userLogin() {
     const email = this.loginForm.value.email;
     const password = this.loginForm.value.password;
-    this.app.login(email, password);
+    this.auth.login(email, password);
   }
 }

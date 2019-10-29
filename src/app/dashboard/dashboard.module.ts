@@ -8,6 +8,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { DashboardPage } from './dashboard.page';
 import { DashboardResolver } from './dashboard.resolver';
+import { DashboardComponent } from './dashboard.component';
 
 const routes: Routes = [
   {
@@ -25,7 +26,8 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [DashboardPage],
-  providers: [DashboardResolver]
+  declarations: [DashboardPage, DashboardComponent],
+  providers: [DashboardResolver],
+  entryComponents: [DashboardComponent]
 })
 export class DashboardPageModule {}
