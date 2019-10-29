@@ -40,15 +40,21 @@ export class DashboardPage implements OnInit {
     return await modal.present();
   }
 
-  async createAccount() {
-    const modal = await this.modalController.create({
-      component: DashboardComponent,
-      componentProps: {
-        message: '',
-        dismiss: () => modal.dismiss(),
-        data: this.acc.createAccount()
-      }
+  createAccount() {
+    const account = Math.floor(Math.random() * 999999999 + 111111111);
+    this.acc.createAccount(account).subscribe(acc => {
+      this.acc.updateAccounts(account).subscribe(async res => {
+        console.log(res);
+        const modal = await this.modalController.create({
+          component: DashboardComponent,
+          componentProps: {
+            message: '',
+            dismiss: () => modal.dismiss(),
+            data: this.acc.getAccount(account)
+          }
+        });
+        await modal.present();
+      });
     });
-    return await modal.present();
   }
 }

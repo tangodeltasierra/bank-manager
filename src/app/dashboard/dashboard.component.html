@@ -8,14 +8,23 @@
 </ion-header>
 <ion-content fullscreen>
   <div class="ion-padding">
-    <h3 *ngIf="account.balance">Balance: {{ account.balance || 0 }}</h3>
-    <h3 *ngIf="account.overdraft">Overdraft: {{ account.overdraft || 0 }}</h3>
+    <h3>Balance: {{ account.balance || 0 }}</h3>
+    <h3>Overdraft: {{ account.overdraft || 0 }}</h3>
 
-    <ion-button expand="block"
-      ><ion-icon name="cash"></ion-icon> Withdraw From Account</ion-button
-    >
-    <ion-button expand="block"
-      ><ion-icon name="wallet"></ion-icon> Deposit into Account
-    </ion-button>
+    <div class="ion-padding">
+      <form [formGroup]="accountForm">
+        <ion-input
+          type="number"
+          formControlName="amount"
+          placeholder="Enter Amount"
+        ></ion-input>
+        <ion-button (click)="withdrawCash()"
+          ><ion-icon name="cash"></ion-icon> Withdraw</ion-button
+        >
+        <ion-button (click)="depositCash()"
+          ><ion-icon name="wallet"></ion-icon> Deposit
+        </ion-button>
+      </form>
+    </div>
   </div>
 </ion-content>

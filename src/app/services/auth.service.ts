@@ -111,7 +111,7 @@ export class AuthService implements CanActivate {
     this.storage
       .remove('auth')
       .then(res => {
-        window.location.href = '/home';
+        this.router.navigate(['/home']);
       })
       .catch(error => console.log(error));
   }

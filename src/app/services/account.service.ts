@@ -4,39 +4,56 @@ import { HttpClient } from '@angular/common/http';
 import VerifyPassword from '../common/VerifyPassword';
 import Account from '../common/Account';
 import { map } from 'rxjs/operators';
+import ClientDetails from '../common/ClientDetails';
+import { from } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
   idToken: string;
-  apiUrl = 'https://momentum-retail-practical-test.firebaseio.com/accounts/';
-  // <account_number>.json?auth=<idToken_from_login_response>';
+  localId: string;
+  accounts: number[];
+  apiUrl = 'https://momentum-retail-practical-test.firebaseio.com/';
+  clientDetails: ClientDetails;
 
   constructor(private auth: AuthService, private http: HttpClient) {
     this.auth.currentUser().subscribe((authData: string) => {
       const authRes = JSON.parse(authData) as VerifyPassword;
       this.idToken = authRes.idToken;
+      this.localId = authRes.localId;
+      this.http
+        .get(
+          `${this.apiUrl}clients/${authRes.localId}.json?auth=${authRes.idToken}`
+        )
+        .subscribe((data: ClientDetails) => {
+          this.accounts = data.accounts;
+          this.clientDetails = data;
+        });
     });
   }
 
   public createAccount(account?: number) {
-    account = account || Math.floor(Math.random() * 999999999 + 111111111);
-    return this.http
-      .put(`${this.apiUrl}${account}.json?auth=${this.idToken}`, {
+    return this.http.put(
+      `${this.apiUrl}accounts/${account}.json?auth=${this.idToken}`,
+      {
         overdraft: 0,
         balance: 0
-      })
-      .pipe(
-        map(res => {
-          return this.getAccount(account);
-        })
-      );
+      }
+    );
+  }
+
+  public updateAccounts(account) {
+    this.clientDetails.accounts.push(account);
+    return this.http.put(
+      `${this.apiUrl}clients/${this.localId}.json?auth=${this.idToken}`,
+      this.clientDetails
+    );
   }
 
   public getAccount(account: number) {
     return this.http
-      .get(`${this.apiUrl}${account}.json?auth=${this.idToken}`)
+      .get(`${this.apiUrl}accounts/${account}.json?auth=${this.idToken}`)
       .pipe(
         map(
           accountData =>
@@ -50,7 +67,7 @@ export class AccountService {
 
   public updateAccount(account: Account) {
     return this.http.put(
-      `${this.apiUrl}${account.accountNumber}.json?auth=${this.idToken}`,
+      `${this.apiUrl}accounts/${account.accountNumber}.json?auth=${this.idToken}`,
       {
         overdraft: account.overdraft,
         balance: account.balance
